@@ -66,34 +66,26 @@ namespace payslipt {
             return (int)Math.Round(getGrossIncome() * this.super);
         }
 
-        private string getUserInput(string question) {
+        private string getUserInput(string question, string regex) {
             string userResponse = "";
 
             do {
                 Console.Write(question);
                 userResponse = Console.ReadLine();
-                if (string.IsNullOrEmpty(userResponse)) {
-                    Console.Write("Empty field detected. Please try again.\n");
+                if (!Regex.IsMatch(userResponse, regex)) {
+                    Console.Write("Invalid input. Please try again.\n");
                 }
-            } while (string.IsNullOrEmpty(userResponse));
+            } while (!Regex.IsMatch(userResponse, regex));
 
             return userResponse;
         }
-        // private bool matchRegex(string str, string regex) {
-        //     if (Regex.IsMatch(str, regex)) {
-		// 	Console.WriteLine("Alphanumeric String");
-        //     }
-        //     else {
-        //         Console.WriteLine("Non-Alphanumeric String");
-        //     }
-        // }
         private void getDetails() {
-            setFirstName(getUserInput("Please input your name: "));
-            setLastName(getUserInput("Please input your surname: "));
-            setSalary(Convert.ToInt32(getUserInput("Please input your salary: ")));
-            setSuper(Convert.ToInt32(getUserInput("Please input your super: ")));
-            setStartDate(getUserInput("Please input your start date: "));
-            setEndDate(getUserInput("Please input your end date: "));
+            setFirstName(getUserInput("Please input your name: ", "^[A-Z][a-z]*$"));
+            setLastName(getUserInput("Please input your surname: ", "^[A-Z][a-z]*$"));
+            setSalary(Convert.ToInt32(getUserInput("Please input your salary: ", "^[0-9]*$")));
+            setSuper(Convert.ToInt32(getUserInput("Please input your super: ", "^[0-9]*$")));
+            setStartDate(getUserInput("Please input your start date: ", "^[a-zA-Z0-9 ]*$"));
+            setEndDate(getUserInput("Please input your end date: ", "^[a-zA-Z0-9 ]*$"));
         }
         private void getPayslip() {
             Console.WriteLine(String.Format("Name: {0} {1}", firstName, lastName));
