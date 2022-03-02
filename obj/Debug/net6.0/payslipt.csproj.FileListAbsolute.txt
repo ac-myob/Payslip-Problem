@@ -1,0 +1,15 @@
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/bin/Debug/net6.0/payslipt
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/bin/Debug/net6.0/payslipt.deps.json
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/bin/Debug/net6.0/payslipt.runtimeconfig.json
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/bin/Debug/net6.0/payslipt.dll
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/bin/Debug/net6.0/payslipt.pdb
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.csproj.AssemblyReference.cache
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.AssemblyInfoInputs.cache
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.AssemblyInfo.cs
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.csproj.CoreCompileInputs.cache
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.dll
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/refint/payslipt.dll
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.pdb
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/payslipt.genruntimeconfig.cache
+/Users/Andrew.Christabel/Desktop/Projects/Phase 1/Katas/payslipt/obj/Debug/net6.0/ref/payslipt.dll
