@@ -1,8 +1,66 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Collections.Generic;
 
 
 namespace payslipt {    
+    public class TaxCalc2 {
+        private int getGrossIncome(int salary) {
+            return (int)Math.Round((double)salary/12);
+        }
+
+        private int getIncomeTax(int salary) {
+            int[] taxBracket = {0, 18200, 37000, 87000, 180000};
+            int[] flatTax = {0, 0, 3572, 19822, 54232};
+            double[] taxRate = {0, 0.19, 0.325, 0.37, 0.45};
+            int incomeTax = 0;
+            const int MONTHS_IN_YEAR = 12;
+
+            // Find correct tax bracket for salary
+            for (int t=taxBracket.Length - 1; t>-1; --t) {
+                if (salary > taxBracket[t]) {
+                    // Income Tax = (Flat Tax + (Salary - Tax Threshold for Salary) x Tax Rate)/12 (Rounded to nearest integer)
+                    incomeTax += (int)Math.Round((flatTax[t] + (salary - taxBracket[t]) * taxRate[t])/MONTHS_IN_YEAR);
+                    return incomeTax;
+                }
+            }
+            return incomeTax;
+        }
+        private int getNetIncome(int salary) {
+            return getGrossIncome(salary) - getIncomeTax(salary);
+        }
+
+        private int getSuper(int grossIncome, double superRate) {
+            return (int)Math.Round(grossIncome * superRate);
+        }
+
+        public void run(string inputFilename, string outputFilename) {
+            string[] lines = File.ReadAllLines(inputFilename);
+            using (System.IO.StreamWriter newFile = new System.IO.StreamWriter(@outputFilename, false)) {
+                // Write header to new file
+                newFile.WriteLine("Name,Pay Period,Gross Income,Income Tax,Net Income,Super");
+                // Start at 1 to skip header
+                for (int l = 1; l < lines.Length; ++l) {
+                    // Evaluate user information
+                    string[] currentLine = lines[l].Split(',');
+                    string name = currentLine[0] + " " + currentLine[1];
+                    string period = currentLine[currentLine.Length - 1] + " - " + currentLine[currentLine.Length - 2];
+                    int salary = Convert.ToInt32(currentLine[2]);
+                    double superRate = (double)Convert.ToInt32(currentLine[3])/100;
+                    // Write user information to csv file
+                    newFile.WriteLine("{0},{1},{2},{3},{4},{5}",
+                        name, 
+                        period, 
+                        getGrossIncome(salary),
+                        getIncomeTax(salary),
+                        getNetIncome(salary),
+                        getSuper(getGrossIncome(salary), superRate)
+                    );
+                }    
+            } 
+        }
+    }
     public class TaxCalc {
         private string firstName;
         private int salary;
@@ -102,12 +160,17 @@ namespace payslipt {
             getPayslip();
             Console.WriteLine("\nThank you for using MYOB!\n");
         }
+
+        public void runCsv() {
+
+        }
     }
 
     class Program {
         static void Main(string[] args) {
             TaxCalc taxCalculator = new TaxCalc();
-            taxCalculator.run();
+            TaxCalc2 taxCalculator2 = new TaxCalc2();
+            taxCalculator2.run("Contacts.csv","Tax.csv");
         }
     }
 }
