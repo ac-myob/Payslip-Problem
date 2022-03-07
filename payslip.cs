@@ -31,8 +31,24 @@ namespace payslipt {
             return getGrossIncome(salary) - getIncomeTax(salary);
         }
 
-        private int getSuper(int grossIncome, double superRate) {
-            return (int)Math.Round(grossIncome * superRate);
+        private int getSuper(int salary, double superRate) {
+            return (int)Math.Round(getGrossIncome(salary) * superRate);
+        }
+
+        private string getPayslipInfo(string userInfo) {
+            // Split user info by comma delimiter
+            string[] splittedUserInfo = userInfo.Split(',');
+            // Evaluate and return payslip information
+            string name = splittedUserInfo[0] + " " + splittedUserInfo[1];
+            string period = splittedUserInfo[splittedUserInfo.Length - 1] + " - " + splittedUserInfo[splittedUserInfo.Length - 2];
+            int salary = Convert.ToInt32(splittedUserInfo[2]);
+            double superRate = (double)Convert.ToInt32(splittedUserInfo[3])/100;
+            int grossIncome = getGrossIncome(salary);
+            int incomeTax = getIncomeTax(salary);
+            int netIncome = getNetIncome(salary);
+            int super = getSuper(salary, superRate);
+
+            return $"{name},{period},{grossIncome},{incomeTax},{netIncome},{super}";
         }
 
         public void run(string inputFilename, string outputFilename) {
@@ -41,22 +57,9 @@ namespace payslipt {
                 // Write header to new file
                 newFile.WriteLine("Name,Pay Period,Gross Income,Income Tax,Net Income,Super");
                 // Start at 1 to skip header
-                for (int l = 1; l < lines.Length; ++l) {
-                    // Evaluate user information
-                    string[] currentLine = lines[l].Split(',');
-                    string name = currentLine[0] + " " + currentLine[1];
-                    string period = currentLine[currentLine.Length - 1] + " - " + currentLine[currentLine.Length - 2];
-                    int salary = Convert.ToInt32(currentLine[2]);
-                    double superRate = (double)Convert.ToInt32(currentLine[3])/100;
+                for (int lineNumber = 1; lineNumber < lines.Length; ++lineNumber) {
                     // Write user information to csv file
-                    newFile.WriteLine("{0},{1},{2},{3},{4},{5}",
-                        name, 
-                        period, 
-                        getGrossIncome(salary),
-                        getIncomeTax(salary),
-                        getNetIncome(salary),
-                        getSuper(getGrossIncome(salary), superRate)
-                    );
+                    newFile.WriteLine(getPayslipInfo(lines[lineNumber]));
                 }    
             } 
         }
